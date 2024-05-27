@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.oscProject";
+
+message CacheUserDetailsRequest{
+  string otp = 1;
+  string userId = 2;
+  string userName = 3;
+  string emailId = 4;
+  string dob = 5;
+  string mobileNo = 6;
+}
+
+message CacheUserDetailsResponse{
+  bool isSave = 1;
+}
+
+message GetOtpRequest{
+  string userId = 1;
+}
+
+message GetOtpResponse{
+  string otp = 1;
+  string userId = 2;
+}
+
+message GetUserDetailsRequest{
+  string userId = 1;
+}
+
+message GetUserDetailsResponse{
+  string userId = 1;
+  string userName = 2;
+  string emailId = 3;
+  string mobNo = 4;
+  string dob = 5;
+}
+
+message GetUserIdRequest{
+  string userId = 1;
+}
+
+message GetCacheClearResponse{
+  bool isCacheClear = 1;
+}
+
+message CacheOtpForgotPassRequest{
+  string emailId = 1;
+  string otp = 2;
+}
+
+message GetOtpForgotPassRequest{
+  string emailId = 1;
+}
+
+message GetOtpForgotPassResponse{
+  string emailId = 1;
+  string otp = 2;
+}
+
+message GetUserDetToChangePasswordRequest{
+  string emailId = 1;
+}
+
+message GetUserDetToChangePasswordResponse{
+  string userId = 1;
+  string userName = 2;
+  string emailId = 3;
+  string mobNo = 4;
+  string dob = 5;
+}
+
+message GetPasswordRequest{
+  string emailId = 1;
+}
+
+/*message CacheOtpForgotPassResponse{
+  string emailId = 1;
+  string otp = 2;
+}*/
+
+service CacheService{
+  rpc storeOtpUserIdInCache(CacheUserDetailsRequest) returns (CacheUserDetailsResponse);
+  rpc getOtp(GetOtpRequest) returns (GetOtpResponse);
+  rpc getUserDetails(GetUserDetailsRequest) returns (GetUserDetailsResponse);
+  rpc clearCache(GetUserIdRequest) returns (GetCacheClearResponse);
+  rpc storeOtpInCacheForgotPass(CacheOtpForgotPassRequest) returns (CacheUserDetailsResponse);
+  rpc getOtpForgotPass(GetOtpForgotPassRequest) returns (GetOtpForgotPassResponse);
+  rpc getUserDetailsToChangePassword(GetUserDetToChangePasswordRequest) returns (GetUserDetailsResponse);
+  rpc clearCacheForForgotPassword(GetPasswordRequest) returns (GetCacheClearResponse);
+}
